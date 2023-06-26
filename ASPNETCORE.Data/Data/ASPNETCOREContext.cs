@@ -1,8 +1,7 @@
 ﻿using ASPNETCORE.Data.Entitys;
 using Microsoft.EntityFrameworkCore;
 
-namespace ASPNETCORE.Data.Data
-{
+namespace ASPNETCORE.Data.Data;
 	public class ASPNETCOREContext : DbContext
 	{
 		public ASPNETCOREContext(DbContextOptions<ASPNETCOREContext> options)
@@ -12,4 +11,3 @@ namespace ASPNETCORE.Data.Data
 
 		public DbSet<MovieEntity> Movie { get; set; } = default!;
 	}
-}

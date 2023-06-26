@@ -3,71 +3,69 @@ using ASPNETCORE.Data.Entitys;
 using ASPNETCORE.Data.Interface;
 using Microsoft.EntityFrameworkCore;
 
-namespace ASPNETCORE.Data.Repository
+namespace ASPNETCORE.Data.Repository;
+public class MovieRepository : IMovieRepository
 {
-	public class MovieRepository : IMovieRepository
+	private readonly ASPNETCOREContext context;
+
+	public MovieRepository(ASPNETCOREContext context)
 	{
-		private readonly ASPNETCOREContext context;
+		this.context = context;
+	}
+	public async Task<MovieEntity?> AddMovieAsync(MovieEntity movie)
+	{
+		if (context.Movie == null || movie == null)
+			return null;
 
-		public MovieRepository(ASPNETCOREContext context)
-		{
-			this.context = context;
-		}
-		public async Task<IEnumerable<MovieEntity>> GetMoviesAsync()
-		{
-			if (context.Movie == null)
-				return Enumerable.Empty<MovieEntity>();
+		context.Movie.Add(movie);
+		await context.SaveChangesAsync();
 
-			return await context.Movie.ToListAsync();
-		}
-		public async Task<MovieEntity?> GetMovieAsync(int id)
-		{
-			if (context.Movie == null)
-				return null;
+		return movie;
+	}
+	public async Task<bool> DeleteMovieAsync(int id)
+	{
+		if (context.Movie == null)
+			return false;
 
-			return await context.Movie.FirstOrDefaultAsync(m => m.Id == id);
-		}
-		public async Task<MovieEntity?> AddMovieAsync(MovieEntity movie)
-		{
-			if (context.Movie == null || movie == null)
-				return null;
+		var movie = await GetMovieAsync(id);
 
-			context.Movie.Add(movie);
-			await context.SaveChangesAsync();
+		if (movie == null)
+			return false;
 
-			return movie;
-		}
-		public async Task<MovieEntity?> UpdateMovieAsync(MovieEntity movie)
-		{
-			context.Attach(movie).State = EntityState.Modified;
+		context.Movie.Remove(movie);
+		await context.SaveChangesAsync();
 
-			try
-			{
-				await context.SaveChangesAsync();
-			}
-			catch (DbUpdateConcurrencyException)
-			{
-				return null;
-			}
+		return true;
+	}
+	public async Task<MovieEntity?> GetMovieAsync(int id)
+	{
+		if (context.Movie == null)
+			return null;
 
-			return movie;
-		}
-		public async Task<bool> DeleteMovieAsync(int id)
-		{
-			if (context.Movie == null)
-				return false;
+		return await context.Movie.FirstOrDefaultAsync(m => m.Id == id);
+	}
+	public async Task<IEnumerable<MovieEntity>> GetMoviesAsync()
+	{
+		if (context.Movie == null)
+			return Enumerable.Empty<MovieEntity>();
 
-			var movie = await GetMovieAsync(id);
-
-			if (movie == null)
-				return false;
-
-			context.Movie.Remove(movie);
-			await context.SaveChangesAsync();
-
-			return true;
-		}
-		public bool MovieExistsAsync(int id)
+		return await context.Movie.ToListAsync();
+	}
+	public bool MovieExists(int id)
 		=> (context.Movie?.Any(e => e.Id == id)).GetValueOrDefault();
+	public async Task<MovieEntity?> UpdateMovieAsync(MovieEntity movie)
+	{
+		context.Attach(movie).State = EntityState.Modified;
+
+		try
+		{
+			await context.SaveChangesAsync();
+		}
+		catch (DbUpdateConcurrencyException)
+		{
+			return null;
+		}
+
+		return movie;
 	}
 }
