@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ASPNETCORE.IoC;
+﻿using ASPNETCORE.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 

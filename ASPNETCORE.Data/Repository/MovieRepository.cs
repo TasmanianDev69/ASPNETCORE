@@ -44,10 +44,10 @@ public class MovieRepository : IMovieRepository
 
 		return await context.Movie.FirstOrDefaultAsync(m => m.Id == id);
 	}
-	public async Task<IEnumerable<MovieEntity>> GetMoviesAsync()
+	public async Task<IList<MovieEntity>> GetMoviesAsync()
 	{
 		if (context.Movie == null)
-			return Enumerable.Empty<MovieEntity>();
+			return new List<MovieEntity>();
 
 		return await context.Movie.ToListAsync();
 	}

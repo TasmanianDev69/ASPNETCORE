@@ -3,6 +3,7 @@ using ASPNETCORE.Data.Interface;
 using ASPNETCORE.Logic.Interface;
 using ASPNETCORE.Logic.Models;
 using AutoMapper;
+using System.Collections;
 
 namespace ASPNETCORE.Logic.Service
 {
@@ -31,8 +32,8 @@ namespace ASPNETCORE.Logic.Service
 		public async Task<Movie?> GetMovieAsync(int id)
 		=> mapper.Map<Movie>(await movieRepository.GetMovieAsync(id));
 
-		public async Task<IEnumerable<Movie>> GetMoviesAsync()
-		=> mapper.Map<IEnumerable<Movie>>(await movieRepository.GetMoviesAsync());
+		public async Task<IList<Movie>> GetMoviesAsync()
+		=> mapper.Map<IList<Movie>>(await movieRepository.GetMoviesAsync());
 
 		public bool MovieExists(int id)
 		 => movieRepository.MovieExists(id);
