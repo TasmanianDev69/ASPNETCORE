@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ASPNETCORE.Logic.Interface;
+using ASPNETCORE.Logic.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using RazorPages.Data;
-using RazorPages.Models;
 
 namespace RazorPages.Pages.Movies
 {
     public class CreateModel : PageModel
     {
-        private readonly RazorPages.Data.RazorPagesContext _context;
+		private readonly IMovieService movieService;
 
-        public CreateModel(RazorPages.Data.RazorPagesContext context)
+		public CreateModel(IMovieService movieService)
         {
-            _context = context;
-        }
+			this.movieService = movieService;
+		}
 
         public IActionResult OnGet()
         {
@@ -31,13 +26,17 @@ namespace RazorPages.Pages.Movies
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Movie == null || Movie == null)
+          if (!ModelState.IsValid ||  Movie == null)
             {
                 return Page();
             }
 
-            _context.Movie.Add(Movie);
-            await _context.SaveChangesAsync();
+            var result = await movieService.AddMovieAsync(Movie);
+
+            if (result == null)
+            {
+                return Page();
+            }
 
             return RedirectToPage("./Index");
         }

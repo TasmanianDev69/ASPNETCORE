@@ -1,35 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ASPNETCORE.Logic.Interface;
+using ASPNETCORE.Logic.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using RazorPages.Data;
-using RazorPages.Models;
 
 namespace RazorPages.Pages.Movies
 {
     public class DeleteModel : PageModel
     {
-        private readonly RazorPages.Data.RazorPagesContext _context;
+		private readonly IMovieService movieService;
 
-        public DeleteModel(RazorPages.Data.RazorPagesContext context)
+		public DeleteModel(IMovieService movieService)
         {
-            _context = context;
-        }
+			this.movieService = movieService;
+		}
 
         [BindProperty]
       public Movie Movie { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Movie == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var movie = await _context.Movie.FirstOrDefaultAsync(m => m.Id == id);
+            var movie = await movieService.GetMovieAsync(id.Value);
 
             if (movie == null)
             {
@@ -39,22 +34,22 @@ namespace RazorPages.Pages.Movies
             {
                 Movie = movie;
             }
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Movie == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            var movie = await _context.Movie.FindAsync(id);
+			var isRemoved = await movieService.DeleteMovieAsync(id.Value);
 
-            if (movie != null)
+
+			if (!isRemoved)
             {
-                Movie = movie;
-                _context.Movie.Remove(Movie);
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
 
             return RedirectToPage("./Index");

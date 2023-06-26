@@ -12,6 +12,6 @@ public interface IMovieService
 	Task<bool> DeleteMovieAsync(int id);
 	Task<Movie?> GetMovieAsync(int id);
 	Task<IEnumerable<Movie>> GetMoviesAsync();
-	bool MovieExistsAsync(int id);
+	bool MovieExists(int id);
 	Task<Movie?> UpdateMovieAsync(Movie movie);
 }

@@ -3,11 +3,6 @@ using ASPNETCORE.Data.Interface;
 using ASPNETCORE.Logic.Interface;
 using ASPNETCORE.Logic.Models;
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ASPNETCORE.Logic.Service
 {
@@ -39,7 +34,7 @@ namespace ASPNETCORE.Logic.Service
 		public async Task<IEnumerable<Movie>> GetMoviesAsync()
 		=> mapper.Map<IEnumerable<Movie>>(await movieRepository.GetMoviesAsync());
 
-		public bool MovieExistsAsync(int id)
+		public bool MovieExists(int id)
 		 => movieRepository.MovieExists(id);
 
 		public async Task<Movie?> UpdateMovieAsync(Movie movie)
