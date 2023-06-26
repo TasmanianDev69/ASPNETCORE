@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using ASPNETCORE.Data.Interface;
+using ASPNETCORE.Data.Repository;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ASPNETCORE.IoC
 {
@@ -6,6 +8,7 @@ namespace ASPNETCORE.IoC
 	{
 		public static IServiceCollection ConfigureServices(this IServiceCollection serviceCollection)
 		{
+			serviceCollection.AddScoped<IMovieRepository, MovieRepository>();
 			return serviceCollection;
 		}
 	}
