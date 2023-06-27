@@ -13,7 +13,7 @@ namespace ASPNETCORE.IoC
 		public static void ConfigureDatabase(this IServiceCollection serviceCollection, string connectionString)
 		{
 			serviceCollection.AddDbContext<ASPNETCOREContext>(options =>
-					options.UseSqlServer(connectionString,x=>x.MigrationsAssembly("ASPNETCORE.Data")));
+					options.UseSqlServer(connectionString,x=>x.MigrationsAssembly("ASPNETCORE.Repository")));
 		}
 		public static void ConfigureServices(this IServiceCollection serviceCollection)
 		{
