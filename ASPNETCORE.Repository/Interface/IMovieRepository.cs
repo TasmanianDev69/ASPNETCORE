@@ -1,12 +1,8 @@
-﻿using ASPNETCORE.Logic.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ASPNETCORE.Data;
 
-namespace ASPNETCORE.Logic.Interface;
-public interface IMovieService
+namespace ASPNETCORE.Repository.Interface;
+
+public interface IMovieRepository
 {
 	Task<Movie?> AddMovieAsync(Movie movie);
 	Task<bool> DeleteMovieAsync(int id);

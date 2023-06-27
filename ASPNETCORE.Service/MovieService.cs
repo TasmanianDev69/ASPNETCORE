@@ -1,11 +1,9 @@
-﻿using ASPNETCORE.Data.Entitys;
-using ASPNETCORE.Data.Interface;
-using ASPNETCORE.Logic.Interface;
-using ASPNETCORE.Logic.Models;
+﻿using ASPNETCORE.Data;
+using ASPNETCORE.Repository.Interface;
+using ASPNETCORE.Service.Interface;
 using AutoMapper;
-using System.Collections;
 
-namespace ASPNETCORE.Logic.Service
+namespace ASPNETCORE.Service
 {
 	public class MovieService : IMovieService
 	{
@@ -21,9 +19,7 @@ namespace ASPNETCORE.Logic.Service
 		{
 			if (movie == null)
 				return null;
-
-			var movieEntity = mapper.Map<MovieEntity>(movie);
-			return mapper.Map<Movie>(await movieRepository.AddMovieAsync(movieEntity));
+			return await movieRepository.AddMovieAsync(movie);
 		}
 
 		public async Task<bool> DeleteMovieAsync(int id)
@@ -43,8 +39,7 @@ namespace ASPNETCORE.Logic.Service
 			if (movie == null)
 				return null;
 
-			var movieEntity = mapper.Map<MovieEntity>(movie);
-			return mapper.Map<Movie>(await movieRepository.UpdateMovieAsync(movieEntity));
+			return await movieRepository.UpdateMovieAsync(movie);
 		}
 	}
 }

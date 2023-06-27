@@ -1,21 +1,24 @@
-﻿using ASPNETCORE.Logic.Interface;
-using ASPNETCORE.Logic.Models;
+﻿using ASPNETCORE.Service.Interface;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using RazorPages.Viewmodel;
 
 namespace RazorPages.Pages.Movies
 {
     public class DeleteModel : PageModel
     {
 		private readonly IMovieService movieService;
+		private readonly IMapper mapper;
 
-		public DeleteModel(IMovieService movieService)
+		public DeleteModel(IMovieService movieService,IMapper mapper)
         {
 			this.movieService = movieService;
+			this.mapper = mapper;
 		}
 
         [BindProperty]
-      public Movie Movie { get; set; } = default!;
+      public MovieViewmodel Movie { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -24,7 +27,7 @@ namespace RazorPages.Pages.Movies
                 return NotFound();
             }
 
-            var movie = await movieService.GetMovieAsync(id.Value);
+            var movie = mapper.Map<MovieViewmodel>(await movieService.GetMovieAsync(id.Value));
 
             if (movie == null)
             {

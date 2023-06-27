@@ -16,7 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ASPNETCORE.Application\ASPNETCORE.Logic.csproj" />
+    <ProjectReference Include="..\ASPNETCORE.Data\ASPNETCORE.Data.csproj" />
+    <ProjectReference Include="..\ASPNETCORE.Repository\ASPNETCORE.Repository.csproj" />
+    <ProjectReference Include="..\ASPNETCORE.Service\ASPNETCORE.Service.csproj" />
   </ItemGroup>
 
 </Project>

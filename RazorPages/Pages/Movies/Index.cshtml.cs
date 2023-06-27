@@ -1,24 +1,26 @@
-﻿using ASPNETCORE.Logic.Interface;
-using ASPNETCORE.Logic.Models;
+﻿using ASPNETCORE.Service.Interface;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+using RazorPages.Viewmodel;
 
 namespace RazorPages.Pages.Movies
 {
     public class IndexModel : PageModel
     {
 		private readonly IMovieService movieService;
+		private readonly IMapper mapper;
 
-		public IndexModel(IMovieService movieService)
+		public IndexModel(IMovieService movieService,IMapper mapper)
         {
 			this.movieService = movieService;
+			this.mapper = mapper;
 		}
 
-        public IList<Movie> Movie { get;set; } = default!;
+        public IList<MovieViewmodel> Movie { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            Movie = await movieService.GetMoviesAsync();       
+            Movie = mapper.Map<IList<MovieViewmodel>>(await movieService.GetMoviesAsync());       
         }
     }
 }

@@ -1,11 +1,10 @@
-﻿using ASPNETCORE.Data.Data;
-using ASPNETCORE.Data.Interface;
-using ASPNETCORE.Data.Repository;
-using ASPNETCORE.Logic.Configuration.Automapper;
-using ASPNETCORE.Logic.Interface;
-using ASPNETCORE.Logic.Service;
+﻿using ASPNETCORE.RazorPages.Configuration.Automapper;
+using ASPNETCORE.Repository;
+using ASPNETCORE.Repository.Context;
+using ASPNETCORE.Repository.Interface;
+using ASPNETCORE.Service;
+using ASPNETCORE.Service.Interface;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace ASPNETCORE.IoC
 {

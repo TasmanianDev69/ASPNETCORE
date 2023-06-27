@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ASPNETCORE.Logic.Models;
+namespace ASPNETCORE.Data;
 public class Movie
 {
 	public int Id { get; set; }

@@ -12,6 +12,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ASPNETCORE.Data\ASPNETCORE.Data.csproj" />
+    <ProjectReference Include="..\ASPNETCORE.Repository\ASPNETCORE.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Service\" />
   </ItemGroup>
 
 </Project>

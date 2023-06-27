@@ -1,21 +1,25 @@
-﻿using ASPNETCORE.Logic.Interface;
-using ASPNETCORE.Logic.Models;
+﻿using ASPNETCORE.Data;
+using ASPNETCORE.Service.Interface;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using RazorPages.Viewmodel;
 
 namespace RazorPages.Pages.Movies
 {
 	public class EditModel : PageModel
 	{
 		private readonly IMovieService movieService;
+		private readonly IMapper mapper;
 
-		public EditModel(IMovieService movieService)
+		public EditModel(IMovieService movieService, IMapper mapper)
 		{
 			this.movieService = movieService;
+			this.mapper = mapper;
 		}
 
 		[BindProperty]
-		public Movie Movie { get; set; } = default!;
+		public MovieViewmodel Movie { get; set; } = default!;
 
 		public async Task<IActionResult> OnGetAsync(int? id)
 		{
@@ -29,7 +33,7 @@ namespace RazorPages.Pages.Movies
 			{
 				return NotFound();
 			}
-			Movie = movie;
+			Movie = mapper.Map<MovieViewmodel>(movie);
 			return Page();
 		}
 
@@ -42,7 +46,7 @@ namespace RazorPages.Pages.Movies
 				return Page();
 			}
 
-			Movie? movie = await movieService.UpdateMovieAsync(Movie);
+			Movie? movie = await movieService.UpdateMovieAsync(mapper.Map<Movie>(Movie));
 
 			if (movie == null)
 			{

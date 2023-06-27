@@ -1,17 +1,21 @@
-﻿using ASPNETCORE.Logic.Interface;
-using ASPNETCORE.Logic.Models;
+﻿using ASPNETCORE.Data;
+using ASPNETCORE.Service.Interface;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using RazorPages.Viewmodel;
 
 namespace RazorPages.Pages.Movies
 {
     public class CreateModel : PageModel
     {
 		private readonly IMovieService movieService;
+		private readonly IMapper mapper;
 
-		public CreateModel(IMovieService movieService)
+		public CreateModel(IMovieService movieService,IMapper mapper)
         {
 			this.movieService = movieService;
+			this.mapper = mapper;
 		}
 
         public IActionResult OnGet()
@@ -20,7 +24,7 @@ namespace RazorPages.Pages.Movies
         }
 
         [BindProperty]
-        public Movie Movie { get; set; } = default!;
+        public MovieViewmodel Movie { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
@@ -31,7 +35,7 @@ namespace RazorPages.Pages.Movies
                 return Page();
             }
 
-            var result = await movieService.AddMovieAsync(Movie);
+            var result = await movieService.AddMovieAsync(mapper.Map<Movie>(Movie));
 
             if (result == null)
             {
