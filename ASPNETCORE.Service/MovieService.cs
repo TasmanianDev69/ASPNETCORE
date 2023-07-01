@@ -1,19 +1,16 @@
 ﻿using ASPNETCORE.Data;
 using ASPNETCORE.Repository.Interface;
 using ASPNETCORE.Service.Interface;
-using AutoMapper;
 
 namespace ASPNETCORE.Service
 {
 	public class MovieService : IMovieService
 	{
 		private readonly IMovieRepository movieRepository;
-		private readonly IMapper mapper;
 
-		public MovieService(IMovieRepository movieRepository, IMapper mapper)
+		public MovieService(IMovieRepository movieRepository)
 		{
 			this.movieRepository = movieRepository;
-			this.mapper = mapper;
 		}
 		public async Task<Movie?> AddMovieAsync(Movie movie)
 		{
@@ -26,13 +23,13 @@ namespace ASPNETCORE.Service
 		=> await movieRepository.DeleteMovieAsync(id);
 
 		public async Task<Movie?> GetMovieAsync(int id)
-		=> mapper.Map<Movie>(await movieRepository.GetMovieAsync(id));
+		=> await movieRepository.GetMovieAsync(id);
 
 		public async Task<IList<Movie>> GetMoviesAsync()
-		=> mapper.Map<IList<Movie>>(await movieRepository.GetMoviesAsync());
+		=> await movieRepository.GetMoviesAsync();
 
 		public async Task<IList<Movie>> GetMoviesByTitleAndGenreAsync(string? title, string? genre)
-			=> mapper.Map<IList<Movie>>(await movieRepository.GetMoviesByTitleAndGenreAsync(title, genre));
+			=> await movieRepository.GetMoviesByTitleAndGenreAsync(title, genre);
 		public async Task<IList<string>> GetGenresAsync()
 			=> await movieRepository.GetGenresAsync();
 

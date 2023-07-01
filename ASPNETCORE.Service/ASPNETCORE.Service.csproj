@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="12.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ASPNETCORE.Data\ASPNETCORE.Data.csproj" />
     <ProjectReference Include="..\ASPNETCORE.Repository\ASPNETCORE.Repository.csproj" />
   </ItemGroup>
