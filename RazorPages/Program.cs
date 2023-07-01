@@ -10,6 +10,13 @@ builder.Services.ConfigureServices();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+	var serviceProvider = scope.ServiceProvider;
+
+	serviceProvider.SeedDatabase();
+}
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

@@ -31,6 +31,11 @@ namespace ASPNETCORE.Service
 		public async Task<IList<Movie>> GetMoviesAsync()
 		=> mapper.Map<IList<Movie>>(await movieRepository.GetMoviesAsync());
 
+		public async Task<IList<Movie>> GetMoviesByTitleAndGenreAsync(string? title, string? genre)
+			=> mapper.Map<IList<Movie>>(await movieRepository.GetMoviesByTitleAndGenreAsync(title, genre));
+		public async Task<IList<string>> GetGenresAsync()
+			=> await movieRepository.GetGenresAsync();
+
 		public bool MovieExists(int id)
 		 => movieRepository.MovieExists(id);
 
