@@ -7,7 +7,7 @@ using ASPNETCORE.Service;
 using ASPNETCORE.Service.Interface;
 using Microsoft.EntityFrameworkCore;
 
-namespace ASPNETCORE.IoC
+namespace RazorPages
 {
 	public static class StartupExtensions
 	{

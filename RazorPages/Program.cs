@@ -1,4 +1,4 @@
-﻿using ASPNETCORE.IoC;
+﻿using RazorPages;
 
 var builder = WebApplication.CreateBuilder(args);
 
